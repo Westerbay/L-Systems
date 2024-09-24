@@ -8,8 +8,8 @@ then
 
 	cd ../build
 	
-	jar cfe Lindenmayer.jar main.MainClass .
-	mv Lindenmayer.jar ../../
+	jar cfe L-Systems.jar main.MainClass .
+	mv L-Systems.jar ../../
 	clear
 	
 	java "main.MainClass" $@
