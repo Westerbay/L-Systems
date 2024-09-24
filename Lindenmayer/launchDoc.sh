@@ -1,4 +1,3 @@
-rm -r doc
+rm -r ../docs
 cd src
-javadoc turtle/*.java turtle/space/*.java system/*.java system/rules/*.java main/*.java -d ../doc
-firefox ../doc/index.html
+javadoc turtle/*.java turtle/space/*.java system/*.java system/rules/*.java main/*.java -d ../../docs
