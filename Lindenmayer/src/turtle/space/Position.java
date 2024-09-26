@@ -2,73 +2,41 @@ package turtle.space;
 
 
 /**
- * Classe représentant une Position graphique
- * @author leriche213
- * @author peltier212
- * @author dubuiss212
+ * Lindenmayer Position
+ * @author Wester
  */
 public class Position{
 
-    private final double[] position;
-    private final double angle;
-    private double[][] vectors;
-    private double length;
+    private final double[] _position;
+    private final double _angle;
+    private double[][] _vectors;
+    private double _length;
 
-
-    /**
-     * Constructeur Position 2D
-     * @param position coordonnées
-     * @param angle direction
-     */
     public Position(double[] position, double angle){
-        this.position = position;
-        this.angle = angle;
+        _position = position;
+        _angle = angle;
     }
 
-    /**
-     * Constructeur Position 3D
-     * @param position coordonnées
-     * @param angle direction
-     * @param vectors vecteurs
-     * @param length taille
-     */
     public Position(double[] position, double angle, double[][] vectors, double length){
         this(position, angle);
-        this.vectors = vectors;
-        this.length = length;
+        _vectors = vectors;
+        _length = length;
     }
 
-    /**
-     * Accesseur Position
-     * @return la position
-     */
     public double[] getPos(){
-        return position;
+        return _position;
     }
 
-    /**
-     * Accesseur angle
-     * @return angle
-     */
     public double getAngle(){
-        return angle;
+        return _angle;
     }
 
-    /**
-     * Accesseur vectors
-     * @return vectors
-     */
     public double[][] getVectors(){
-        return vectors;
+        return _vectors;
     }
 
-
-    /**
-     * Accesseur length
-     * @return length
-     */
     public double getLength(){
-        return length;
+        return _length;
     }
 
 }

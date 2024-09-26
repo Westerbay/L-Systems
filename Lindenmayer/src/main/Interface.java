@@ -5,17 +5,15 @@ import system.Fractals;
 
 
 /**
- * Classe d'instanciation des éléments graphiques
+ * Interface
+ * @author Wester
  */
 public class Interface {
 
-	/** Le numéro correspondant à une fractale par défaut lors du lancement */
+	/** Index of a default fractal */
 	public static int INDEX;
 
 
-	/**
-	 * Constructeur
-	 */
     public Interface(int index) {
         
         index %= Fractals.systemPresets.length;
@@ -29,9 +27,6 @@ public class Interface {
         
     }
     
-    /**
-	 * Constructeur par défaut
-	 */
     public Interface() {
     	this(0);
     }

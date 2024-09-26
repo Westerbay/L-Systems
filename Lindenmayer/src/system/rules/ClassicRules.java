@@ -5,17 +5,10 @@ import java.util.HashMap;
 
 
 /**
- * Classe représentant des règles de L-System classiques
- * @author dubuiss212
+ * Classic L-System rules
+ * @author Wester
  */
 public class ClassicRules extends HashMap<Character, String> implements Rules {
-
-    /**
-     * Constructeur
-     */
-    public ClassicRules(){
-        super();
-    }
 
     @Override
     public boolean containsKey(char c){

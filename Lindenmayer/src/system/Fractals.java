@@ -3,21 +3,17 @@ package system;
 
 
 /**
- * Classe représentant les ensembles de fractales par défauts
- * @author dubuiss212
+ * Default fractals to present
+ * @author Wester
  */
 public class Fractals {
 
-
-	/** Un exemple de L-System simple */
 	public static final SystemL Simple = ConstructSystem.createSystem(
 		90,
 		"F-F-F-F",
 		"F: FF-F-F-F-FF"
 	);
 	
-	
-	/** Un exemple de L-System simple avec Edge rewriting (Avec notion de droite et de gauche) */
 	public static final SystemL FASS = ConstructSystem.createSystem(
 		90,
 		"Fl",
@@ -25,16 +21,12 @@ public class Fractals {
 		"Fr: -Fl-Fr"
 	);
 
-	
-	/** Un exemple de Bracketed L-System (les plantes) */
 	public static final SystemL BracketedSimple = ConstructSystem.createSystem(
 		22.5,
 		"F",
 		"F: FF-[-F+F+F]+[+F-F-F]"
 	);
 	
-	
-	/** Un exemple de L-System simple en 3D */
 	public static final SystemL Simple3D = ConstructSystem.createSystem(
 			90,
 			"A",
@@ -45,7 +37,6 @@ public class Fractals {
 	);
 
 	
-	/** Un exemple de Bracketed L-System simple en 3D (une plante 3D) */
 	public static final SystemL Plant3D = ConstructSystem.createSystem(
 			22.5,
 			"P",
@@ -59,7 +50,6 @@ public class Fractals {
 	);
 
 	
-	/** Un exemple de L-System Stochastic */
 	public static final SystemL Stochastic = ConstructSystem.createSystem(
 			25.7,
 			"F",
@@ -68,8 +58,6 @@ public class Fractals {
 			"F: 0.34: F[-F]F"
 	);
 	
-	
-	/** Un exemple de L-System ContextSensitive */
 	public static final SystemL Context = ConstructSystem.createSystem(
 			22.5,
 			"F1F1F1",
@@ -86,14 +74,12 @@ public class Fractals {
 			"* < - > *: +"
 	);
 
-	
-	/** Tableau stockant toutes les fractales par défauts */
 	public final static SystemL[] systemPresets = new SystemL[] {
 		Simple, FASS, BracketedSimple, Simple3D, Plant3D, Stochastic, Context
 	};
 	
 	
-	/** Tableau stockant toutes les options de configurations des fractales par défauts */
+	/** Default configurations for fractals above */
 	public final static int[][] optionPresets = new int[][] {
 			new int[] {5, 2},
 			new int[] {18, 1},

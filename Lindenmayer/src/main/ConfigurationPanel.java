@@ -7,27 +7,23 @@ import javax.swing.event.*;
 import java.awt.event.*;
 
 /**
- * @author leriche213
+ * Configuration Panel for L-Systems
+ * @author Wester
  */
 public class ConfigurationPanel extends JPanel implements ChangeListener, ActionListener{
-    /**
-     * Initialise de nombreuse choses telle que :
-	 * Le layout du Jpanel
-     * Les differents bouttons et JtextArea
-  	 * Et le turtlePanel pour acceder à la methode Parse
-     */
+    
     private GridBagConstraints gbc = new GridBagConstraints();
     private JSlider slide = new JSlider(0,6,0);
     private Font police = new Font("Serif",Font.PLAIN,30);
     private Font police2 = new Font("Serif",Font.PLAIN,25);
     private Font police3 = new Font("Serif",Font.PLAIN,20);
-    private JSpinner spinnerN = new JSpinner(new SpinnerNumberModel(5,0,40,1));//correspond à -Le chiffre de depart , la valeur minimun , la valeur Max , le pas ;
+    private JSpinner spinnerN = new JSpinner(new SpinnerNumberModel(5,0,40,1));
     private JSpinner spinnerL = new JSpinner(new SpinnerNumberModel(2.0,0,800,1.0));
     private JSpinner spinnerδ = new JSpinner(new SpinnerNumberModel(90.0,-360,360,1.0));
     private JButton generateur = new JButton("Draw");
-    private JTextField axiomEcrit = new JTextField(17);//parametre le nombre de ligne & de colonne 
+    private JTextField axiomEcrit = new JTextField(17);
     private JTextArea rulesEcrit = new JTextArea(11,17);
-    private TurtlePanel turtlePanel; //Ecouteur
+    private TurtlePanel turtlePanel; 
 
     public ConfigurationPanel(TurtlePanel turtlePanel){
 		
@@ -285,7 +281,7 @@ public class ConfigurationPanel extends JPanel implements ChangeListener, Action
             int[] options = Fractals.optionPresets[index];
             
             SystemL creaFract = Fractals.systemPresets[index];
-            turtlePanel.parse(creaFract,options);
+            turtlePanel.interprete(creaFract,options);
             axiomEcrit.setText(creaFract.getGeneration(0));
             rulesEcrit.setText(creaFract.getRules());
 
@@ -340,7 +336,7 @@ public class ConfigurationPanel extends JPanel implements ChangeListener, Action
             try{
                 systemTemp = creation.createSystem(sendAngle,sendAxiom,sendRuless);
                 if (systemTemp != null)
-		        	turtlePanel.parse(systemTemp,sendGen,sendLength);
+		        	turtlePanel.interprete(systemTemp,sendGen,sendLength);
 		        else {
 		        	JFrame frame = new JFrame();
 		        	JOptionPane.showMessageDialog(frame, "Unrecognized system, Only Simple/Stochastic/ContextSensitive available ! ");
@@ -349,11 +345,6 @@ public class ConfigurationPanel extends JPanel implements ChangeListener, Action
             	JFrame frame = new JFrame();
                 JOptionPane.showMessageDialog(frame, "Syntax Error ! ");
             }
-            
-
-            /*System.out.println(sendAxiom);
-            System.out.println(sendRuless[0]);
-            System.out.println(sendAngle);*/
             
         }
 

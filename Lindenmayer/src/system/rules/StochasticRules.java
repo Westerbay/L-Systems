@@ -6,35 +6,15 @@ import java.util.HashMap;
 
 
 /**
- * Classe représentant des règles de L-System classiques
- * @author dubuiss212
+ * Stochastic L-System rules
+ * @author Wester
  */
 public class StochasticRules extends HashMap<Character, ArrayList<Pair<Float, String>>> implements Rules {
-
-    /**
-     * Constructeur
-     */
-    public StochasticRules(){
-        super();
-    }
-    
-
-	/**
-	 * Ajoute une pair de valeurs aux règles
-	 * @param key le caractère à remplacer
-	 * @param proba la probabilité que le caractère soit remplacer par replace
-	 * @param replace la nouvelle transformation du caractère
-	 */
-    public void put(char key, float proba, String replace){
+   
+    public void put(char key, float proba, String replace) {
         put(key, new Pair<>(proba, replace));
     }
     
-    
-	/**
-	 * Ajoute une pair de valeurs aux règles
-	 * @param key le caractère à remplacer
-	 * @param rule la règle de probabilité associée à key
-	 */
     public void put(char key, Pair<Float, String> rule) {
         if (!containsKey(key)){
             ArrayList<Pair<Float, String>> listOfRules = new ArrayList<>();
@@ -49,7 +29,7 @@ public class StochasticRules extends HashMap<Character, ArrayList<Pair<Float, St
     
 
     @Override
-    public String get(int index, String ch){
+    public String get(int index, String ch) {
     
     	char key = ch.charAt(index);
         if (containsKey(key)){
@@ -66,12 +46,12 @@ public class StochasticRules extends HashMap<Character, ArrayList<Pair<Float, St
     }
 
     @Override
-    public boolean containsKey(char c){
+    public boolean containsKey(char c) {
         return super.containsKey(c);
     } 
     
     @Override
-    public String toString(){
+    public String toString() {
     	String repr = "";
     	for (char c: keySet()){
     		for (Pair<Float, String> pair: super.get(c)){
@@ -84,3 +64,4 @@ public class StochasticRules extends HashMap<Character, ArrayList<Pair<Float, St
     }
 
 }
+

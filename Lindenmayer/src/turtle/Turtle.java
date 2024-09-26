@@ -8,109 +8,68 @@ import turtle.space.*;
 
 
 /**
- * Classe abstraite représentant une tortue graphique
- * @author dubuiss212
+ * Abstract Turtle Graphics
+ * @author Wester
  */
 public abstract class Turtle {
 
-    protected double d = 10;
-    
-    protected double[] position; 
-    protected double angle, defaultAngle;  
-    protected Pile<Position> pile = new Pile<>();
-    
-    /**
-     * Mutateur sur length
-     * @param length length
-     */
-    public void setLength(double length){
-        d = length;
-    }
+	private static final double DEFAULT_START_ANGLE = 90;
+	private static final double DEFAULT_LENGTH = 10;
 
-    /**
-     * Constructeur
-     * @param position la position initiale
-     */
+    protected double _length = DEFAULT_LENGTH; 
+    protected double _angle;
+    protected double _defaultAngle;    
+    protected double[] _position;  
+    protected Stack<Position> _stack = new Stack<>();
+    
     public Turtle(double[] position){
-        this.position = position;        
+        _position = position;        
+    }    
+   
+    public void setLength(double length){
+        _length = length;
     }
 
-
-    /**
-     * Accesseur
-     * @return la position
-     */
     public double[] getPos(){
-        return position;
+        return _position;
     }
 
-
-    /**
-     * Initialise la position de la tortue
-     * @param position la position
-     */
     public void setPos(double[] position){
-        this.position = position;
+        _position = position;
     }
 
-    /**
-     * Mutateur sur defaultAngle
-     * @param angle l'angle par défaut
-     */
     public void setDefaultAngle(double angle){
-        defaultAngle = angle;
+        _defaultAngle = angle;
     }
     
-
-    /**
-     * Reset de la tortue
-     */
     public void reset(){
-        Arrays.fill(position, 0);
-        angle = 90;
+        Arrays.fill(_position, 0);
+        _angle = DEFAULT_START_ANGLE;
     }
 
-    /**
-     * Avance en dessinant
-     * @param g les composant graphiques
-     */
+	/**
+	 * Forward fonction (Move and draw)
+	 */
     public void F(Graphics g){
         move(true, g);
     }
-
-    /**
-     * Avance sans dessiner
-     * @param g les composant graphiques
-     */
+	
+	/**
+	 * Forward fonction (Move but do not draw)
+	 */
     public void f(Graphics g){
         move(false, g);
     }  
 
-    /**
-     * Permet le déplacement d'une distance d
-     * @param draw doit-on dessiner lors du trajet ?
-     * @param g les composants graphiques
-     */
     public abstract void move(boolean draw, Graphics g);
 
-    /**
-     * Tourne à gauche
-     */
     public abstract void left();
 
-    /**
-     * Tourne à droite
-     */
     public abstract void right();
 
-    /**
-     * Sauvegarde l'emplacement de la tortue
-     */
     public abstract void push();    
 
-    /**
-     * Déplace la tortue à l'ancien emplacement sauvegardé
-     */
     public abstract void pop();
 
 }
+

@@ -8,19 +8,16 @@ import turtle.space.*;
 
 
 /**
- * Classe représentant une tortue graphique en 3D
- * @author dubuiss212
+ * Turtle graphics for 3D
+ * @author Wester
  */
 public class Turtle3D extends Turtle {
     
-    private int angleRotation = -134, centerX = 0, centerY = 0;
-    private double[][] vectors;
-    private boolean drawPoly = false;
-    private ArrayList<int[]> polyList;
+    private int _angleRotation = -134, _centerX = 0, _centerY = 0;
+    private double[][] _vectors;
+    private boolean _drawPoly = false;
+    private ArrayList<int[]> _polyList;
 
-    /**
-     * Constructeur
-     */
     public Turtle3D(){
 
         super(new double[]{0, 0, 0}); // Start at (0, 0, 0)
@@ -31,7 +28,7 @@ public class Turtle3D extends Turtle {
          * Vector U -> top of the turtle
          * Matrix vectors = [H L U];
          */
-        vectors = new double[][] {
+        _vectors = new double[][] {
             new double[] {0, 0, 1},
             new double[] {-1, 0, 0},
             new double[] {0, 1, 0},            
@@ -39,36 +36,20 @@ public class Turtle3D extends Turtle {
 
     }
 
-    /**
-     * Centre la fractale en 'x'
-     * @param x coordonnée en 'x'
-     */
     public void setCenterX(int x){
-        centerX = x;
+        _centerX = x;
     }
 
-    /**
-     * Centre la fractale en 'y'
-     * @param y coordonnée en 'y'
-     */
     public void setCenterY(int y){
-        centerY = y;
+        _centerY = y;
     }
 
-    /**
-     * Incrémente l'angle de rotation
-     */
     public void increaseAngleRota(){
-        angleRotation ++;
-        if (angleRotation == 360)
-            angleRotation = 0;
+        _angleRotation ++;
+        if (_angleRotation == 360)
+            _angleRotation = 0;
     }
 
-    /**
-     * Copie des vecteurs 3D
-     * @param vectors vecteurs
-     * @return une copie des vecteurs
-     */
     public double[][] copyVectors(double[][] vectors){
         double[][] copy = new double[3][];
         copy[0] = copyPoint(vectors[0]);
@@ -77,11 +58,6 @@ public class Turtle3D extends Turtle {
         return copy;
     }
 
-    /**
-     * Copie un point 3D
-     * @param point point
-     * @return une copie du point
-     */
     public double[] copyPoint(double[] point){
         double[] copy = new double[3];
         copy[0] = point[0];
@@ -92,29 +68,29 @@ public class Turtle3D extends Turtle {
 
     @Override
     public void move(boolean draw, Graphics g){
+    
         // Consider the origin
-
-        double[] oldPosition = copyPoint(position);
+        double[] oldPosition = copyPoint(_position);
 
         for (int i = 0; i<3; i++)
-            position[i] += vectors[i][0] * d;
+            _position[i] += _vectors[i][0] * _length;
 		
-		//On ignore la coordonnée z, mais pour faire un semblant de profondeur, on applique une rotation matricielle sur notre vecteur pour faire du mouvement
-        double[] oldProjected2d = Space.Rota3D(oldPosition, Space.getRotationMatrixL(angleRotation));
+		// Ignore Z axis to project in a 2D plan (the screen) and apply a constant rotation
+        double[] oldProjected2d = Space.Rota3D(oldPosition, Space.getRotationMatrixL(_angleRotation));
         oldProjected2d = Space.Rota3D(oldProjected2d, Space.getRotationMatrixH(30));
-        double[] projected2d = Space.Rota3D(position, Space.getRotationMatrixL(angleRotation));
+        double[] projected2d = Space.Rota3D(_position, Space.getRotationMatrixL(_angleRotation));
         projected2d = Space.Rota3D(projected2d, Space.getRotationMatrixH(30));
 		
-		//Conversion et centrage des nouvelles coordonnées 2d
-        int x  = (int)(Math.round(oldProjected2d[0])) + centerX;
-        int y  = (int)(Math.round(oldProjected2d[1])) + centerY;
-        int dx = (int)(Math.round(projected2d[0])) + centerX;
-        int dy = (int)(Math.round(projected2d[1])) + centerY;
+		// Center new 2D points
+        int x  = (int)(Math.round(oldProjected2d[0])) + _centerX;
+        int y  = (int)(Math.round(oldProjected2d[1])) + _centerY;
+        int dx = (int)(Math.round(projected2d[0])) + _centerX;
+        int dy = (int)(Math.round(projected2d[1])) + _centerY;
 
         if (draw)
             g.drawLine(x, y, dx, dy);
-        if (drawPoly)
-            polyList.add(new int[] {dx, dy});
+        if (_drawPoly)
+            _polyList.add(new int[] {dx, dy});
 
     }
 
@@ -122,113 +98,86 @@ public class Turtle3D extends Turtle {
     public void reset(){
         super.reset();
         // Reset the vectors
-        vectors = new double[][] {
+        _vectors = new double[][] {
             new double[] {0, 0, 1},
             new double[] {-1, 0, 0},
             new double[] {0, 1, 0}, 
         };
-        polyList = new ArrayList<>();
+        _polyList = new ArrayList<>();
     }
 
     @Override
     public void left(){
-        vectors = Space.Rota3D(vectors, Space.getRotationMatrixU(-defaultAngle));
+        _vectors = Space.Rota3D(_vectors, Space.getRotationMatrixU(-_defaultAngle));
     }
 
     @Override
     public void right(){
-        vectors = Space.Rota3D(vectors, Space.getRotationMatrixU(+defaultAngle));
+        _vectors = Space.Rota3D(_vectors, Space.getRotationMatrixU(_defaultAngle));
     }
 
     @Override
     public void push(){
-        double[] pos = copyPoint(position);
-        double[][] vect = copyVectors(vectors);
-        pile.empile(new Position(pos, angle, vect, d));
+        double[] pos = copyPoint(_position);
+        double[][] vect = copyVectors(_vectors);
+        _stack.push(new Position(pos, _angle, vect, _length));
     }
 
     @Override
     public void pop() {
-        Position p = pile.depile();
-        position = p.getPos();
-        angle = p.getAngle();
-        vectors = p.getVectors();
-        d = p.getLength();
+        Position p = _stack.pop();
+        _position = p.getPos();
+        _angle = p.getAngle();
+        _vectors = p.getVectors();
+        _length = p.getLength();
     }
 
-    /**
-     * PitchDown
-     */
     public void pitchDown(){
-        vectors = Space.Rota3D(vectors, Space.getRotationMatrixL(defaultAngle));
+        _vectors = Space.Rota3D(_vectors, Space.getRotationMatrixL(_defaultAngle));
     }
-
-    /**
-     * PitchUp
-     */
+    
     public void pitchUp(){
-        vectors = Space.Rota3D(vectors, Space.getRotationMatrixL(-defaultAngle));
+        _vectors = Space.Rota3D(_vectors, Space.getRotationMatrixL(-_defaultAngle));
     }
 
-    /**
-     * RollLeft
-     */
     public void rollLeft(){
-        vectors = Space.Rota3D(vectors, Space.getRotationMatrixH(defaultAngle));
+        _vectors = Space.Rota3D(_vectors, Space.getRotationMatrixH(_defaultAngle));
     }
 
-    /**
-     * RollRight
-     */
     public void rollRight(){
-        vectors = Space.Rota3D(vectors, Space.getRotationMatrixH(-defaultAngle));
+        _vectors = Space.Rota3D(_vectors, Space.getRotationMatrixH(-_defaultAngle));
     }
 
-    /**
-     * TurnAround
-     */
     public void turnAround(){
-        vectors = Space.Rota3D(vectors, Space.getRotationMatrixU(180));
+        _vectors = Space.Rota3D(_vectors, Space.getRotationMatrixU(180));
     }
 
-    /**
-     * Decremente length
-     */
     public void decrement(){
-        d /= 2;
+        _length /= 2;
     }
 
-    /**
-     * Pas encore implémenté, cela dépend des couleurs par défauts que l'on choisit
-     */
     public void incrementColor() {}
 
-    /**
-     * On annonce que l'on veut dessiner un polygone
-     */
     public void startPolygon(){
-        drawPoly = true;
+        _drawPoly = true;
     }
 
-    /**
-     * Dessine un polygone
-     * @param g graphics component
-     */
     public void completePolygon(Graphics g){
 
-        drawPoly = false;
+        _drawPoly = false;
 
-        int size = polyList.size();
+        int size = _polyList.size();
         int[] allX = new int[size];
         int[] allY = new int[size];
 
         for (int i = 0; i<size; i++){
-            allX[i] = polyList.get(i)[0];
-            allY[i] = polyList.get(i)[1];
+            allX[i] = _polyList.get(i)[0];
+            allY[i] = _polyList.get(i)[1];
         }
         g.fillPolygon(allX, allY, size);
 
-        polyList.clear();
+        _polyList.clear();
     }
 
 }
+

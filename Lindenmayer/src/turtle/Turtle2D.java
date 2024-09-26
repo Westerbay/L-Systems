@@ -8,30 +8,25 @@ import turtle.space.Position;
 
 
 /**
- * Classe représentant une tortue graphique en 2D
- * @author dubuiss212
+ * Turtle graphics for 2D
+ * @author Wester
  */
 public class Turtle2D extends Turtle {
 
-    /**
-     * Constructeur
-     */
     public Turtle2D(){
-        
         super(new double[]{0, 0});
-
     }
 
 
     @Override
     public void move(boolean draw, Graphics g){
 
-        double x = position[0];
-        double y = position[1];
+        double x = _position[0];
+        double y = _position[1];
 
-        double radiantAngle = Space.degresToRadian(angle);
-        double dx = x + Math.cos(radiantAngle) * d;
-        double dy = y - Math.sin(radiantAngle) * d;
+        double radiantAngle = Space.degresToRadian(_angle);
+        double dx = x + Math.cos(radiantAngle) * _length;
+        double dy = y - Math.sin(radiantAngle) * _length;
 
         if (draw)
             g.drawLine((int)Math.round(x), (int)Math.round(y), (int)Math.round(dx), (int)Math.round(dy));        
@@ -41,24 +36,24 @@ public class Turtle2D extends Turtle {
 
     @Override
     public void left(){
-        angle += defaultAngle;
+        _angle += _defaultAngle;
     }
 
     @Override
     public void right(){
-        angle -= defaultAngle;
+        _angle -= _defaultAngle;
     }
 
     @Override
     public void push(){
-        pile.empile(new Position(position, angle));
+        _stack.push(new Position(_position, _angle));
     }
 
     @Override
     public void pop(){
-        Position p = pile.depile();
-        position = p.getPos();
-        angle = p.getAngle();
+        Position p = _stack.pop();
+        _position = p.getPos();
+        _angle = p.getAngle();
     }
 
 }

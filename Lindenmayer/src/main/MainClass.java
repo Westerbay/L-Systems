@@ -3,7 +3,7 @@ package main;
 
 /**
  * The main class
- * @author dubuiss212
+ * @author Wester
  */
 public class MainClass {
 	

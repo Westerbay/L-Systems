@@ -2,49 +2,31 @@ package system.rules;
 
 
 /**
- * Classe représentant une structure de données de pairs
- * @author dubuiss212
+ * Triple 
+ * @author Wester
  */
 public class Triple<A, B, C> {
 
-    private final A firstValue;
-    private final B secondValue;
-    private final C thirdValue;
-
-    /**
-     * Constructeur
-     * @param a firstValue
-     * @param b secondValue
-     * @param c thirdValue
-     */
-    public Triple(A a, B b, C c){
-        firstValue = a;
-        secondValue = b;
-        thirdValue = c;
+    private final A _firstValue;
+    private final B _secondValue;
+    private final C _thirdValue;
+    
+    public Triple(A firstValue, B secondValue, C thirdValue) {
+        _firstValue = firstValue;
+        _secondValue = secondValue;
+        _thirdValue = thirdValue;
     }
 
-    /**
-     * Accesseur firstValue
-     * @return l'attribut firstValue
-     */
-    public A getFirstValue(){
-        return firstValue;
+    public A getFirstValue() {
+        return _firstValue;
     }
 
-    /**
-     * Accesseur secondValue
-     * @return l'attribut secondValue
-     */
-    public B getSecondValue(){
-        return secondValue;
+    public B getSecondValue() {
+        return _secondValue;
     }
     
-    /**
-     * Accesseur thirdValue
-     * @return l'attribut thirdValue
-     */
-    public C getThirdValue(){
-        return thirdValue;
+    public C getThirdValue() {
+        return _thirdValue;
     }
 
 }
