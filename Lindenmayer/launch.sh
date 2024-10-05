@@ -1,5 +1,6 @@
 clear
 
+mkdir -p build
 cd src
 javac -d ../build "main/MainClass.java"
 
