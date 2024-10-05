@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"main"},{"l":"system"},{"l":"system.rules"},{"l":"turtle"},{"l":"turtle.space"}];updateSearchResults();
