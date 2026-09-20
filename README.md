@@ -1,35 +1,70 @@
-# Lindenmayer Systems - University Project (JAVA)
+# L-Systems
 
-This project is an L-System (Lindenmayer System) interpreter developed as a university project during my second year of studies at the University of Caen. L-Systems are formal systems used to model plant growth, create fractals, and generate algorithmic patterns. This interpreter takes user-defined L-System rules and axioms, generating the resulting character sequence for a given number of iterations, which can then be visualized graphically.
+A Java desktop L-system interpreter developed during my second year at the University of Caen. It expands rewriting rules from an axiom and displays the result with 2D or 3D turtle graphics in a Swing interface.
 
-## Table of Contents
+## Run
 
-- [Introduction to L-Systems](#introduction-to-l-systems)
-- [Features](#features)
-- [Example](#example)
-- [Authors](#authors)
+A prebuilt `L-Systems.jar` is included at the repository root. With Java installed and a graphical desktop available:
 
-## Introduction to L-Systems
+```sh
+java -jar L-Systems.jar
+```
 
-**L-Systems** were developed by Hungarian biologist Lindenmayer to describe the growth of biological forms, like algae or ferns. An L-System consists of:
-- **Axiom**: An initial string of characters.
-- **Production Rules**: A set of rewrite rules defining how each symbol in the string is transformed from one iteration to the next.
-- **Rotation Angle**: Used for graphical visualization with defined angles at each iteration.
+An optional numeric argument selects one of the seven built-in presets. For example, index `4` opens the 3D plant:
 
-L-Systems are commonly used for generating fractals and simulating biological structures.
+```sh
+java -jar L-Systems.jar 4
+```
 
-## Features
+Preset indices are zero-based, from `0` to `6`.
 
-- **L-System Interpretation**: Supports user-defined rules and axioms to generate L-System sequences.
-- **Graphical Visualization**: Uses Java's graphical capabilities to visualize the generated L-System patterns.
-- **Customization**: Users can define rules, axiom, rotation angle, and number of iterations.
+## Build from source
+
+Install a JDK providing `javac`, `jar` and `java`. No external Java dependencies or build tool are used.
+
+From the repository root:
+
+```sh
+cd Lindenmayer
+bash launch.sh
+```
+
+The script compiles `src/main/MainClass.java` and its dependencies into `Lindenmayer/build/`, rebuilds `L-Systems.jar` at the repository root, and launches the application. It also accepts the optional preset index:
+
+```sh
+bash launch.sh 4
+```
+
+## Use the interface
+
+Choose a preset, or edit the axiom and rules. The controls set the generation count (`n`), segment length (`l`) and rotation angle (`δ`). Click **Draw** after editing the grammar.
+
+The interpreter includes deterministic, stochastic and context-sensitive rule implementations. Rule formats are demonstrated in the built-in presets in [Fractals.java](Lindenmayer/src/system/Fractals.java).
+
+For a simple branching plant, set the axiom to `F`, the angle to `22.5` and enter this rule:
+
+```text
+F: FF-[-F+F+F]+[+F-F-F]
+```
+
+The viewer selects the 2D or 3D turtle from the grammar. The 3D view rotates automatically. Its projection and drawing are implemented in Java with AWT/Swing.
 
 ## Example
 
-Here is a simple example of an L-System representing a 3D flower:
+![3D flower](flower.png)
 
-![3D Flower](flower.png)
+## Code layout
 
-## Authors
+- `Lindenmayer/src/main/`: application entry point, Swing window, controls and drawing panel.
+- `Lindenmayer/src/system/`: rewriting, presets and rule construction.
+- `Lindenmayer/src/system/rules/`: deterministic, stochastic and context-sensitive rules.
+- `Lindenmayer/src/turtle/`: 2D and 3D turtle interpreters.
+- `Lindenmayer/src/turtle/space/`: positions, stacks and spatial transformations.
 
-Developed by Wester
+The repository also includes the reference document [abop.pdf](abop.pdf).
+
+## Author and license
+
+Mathis Dubuisson (Wester).
+
+See [LICENSE](LICENSE) for the GPLv3 license text.
